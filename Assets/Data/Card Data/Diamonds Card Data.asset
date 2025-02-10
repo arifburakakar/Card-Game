@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ce41a48cd84ad2876edd88def3c5fc, type: 3}
+  m_Name: Diamonds Card Data
+  m_EditorClassIdentifier: 
+  ItemData:
+  - ItemName: Ace Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 1
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: c4e737c8da6464460a64a2a14134616b, type: 3}
+    WarmCount: 1
+  - ItemName: 2 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 2
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: fae185f87139e4dbcbcb3536901acf76, type: 3}
+    WarmCount: 1
+  - ItemName: 3 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 3
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 13465c9a2859f4fdaadc5e8758e7caa4, type: 3}
+    WarmCount: 1
+  - ItemName: 4 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 4
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: b97f2a1523c8a43b08234dadd38a3471, type: 3}
+    WarmCount: 1
+  - ItemName: 5 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 5
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: a198663479e334113a636e17f64997e7, type: 3}
+    WarmCount: 1
+  - ItemName: 6 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 6
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 9791e638500004c7393f9500512a22b1, type: 3}
+    WarmCount: 1
+  - ItemName: 7 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 7
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: c76a14b2b7e444746a34d3c5da2cfb39, type: 3}
+    WarmCount: 1
+  - ItemName: 8 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 8
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: fd4ef109428ea40bf921fc7a2fbc9a30, type: 3}
+    WarmCount: 1
+  - ItemName: 9 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 9
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 6a2d64738ed4946269f8727e16bb979a, type: 3}
+    WarmCount: 1
+  - ItemName: 10 Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 10
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 7a47c3152115c4cf48134ab8a281036b, type: 3}
+    WarmCount: 1
+  - ItemName: Jack Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 11
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 697dcedde3b144eedb41c237af59986a, type: 3}
+    WarmCount: 1
+  - ItemName: Queen Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 12
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: a28fb99aaadf94566b2d632680691400, type: 3}
+    WarmCount: 1
+  - ItemName: King Diamonds
+    OID:
+      ObjectID: 2
+      VariantID: 13
+    Item: {fileID: 2041133231599095992, guid: a015662005df348c5820d15915b49a17, type: 3}
+    ItemSprite: {fileID: 21300000, guid: add28f5e755e048b78e744609824b312, type: 3}
+    WarmCount: 1
