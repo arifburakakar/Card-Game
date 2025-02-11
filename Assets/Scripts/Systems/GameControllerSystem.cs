@@ -5,16 +5,10 @@ using UnityEngine.SceneManagement;
 public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
 {
     public bool IsMetaActive { get; private set; }
-    public GameplayConfig GameplayConfig { get; private set; }
 
     private IManager metaManager;
     private IManager gameplayManager;
 
-    protected override void OnInitialize()
-    {
-        base.OnInitialize();
-        GameplayConfig = Resources.Load<GameplayConfig>("GameplayConfig");
-    }
 
     public IEnumerator LoadMain()
     {

@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class GameplayManager : BaseManager
 {
+    public GameplayConfig GameplayConfig { get; private set; }
     public PoolHandler PoolHandler { get; private set; }
     private Game activeGame;
+    public UIGameplayHudPanel UIGameplayHud;
     
     protected override void OnInitialize()
     {
         base.OnInitialize();
+        GameplayConfig = Resources.Load<GameplayConfig>("GameplayConfig");
         PoolHandler = new PoolHandler();
         PoolHandler.Initialize(Resources.Load<GameItemsConfig>("GameItemsConfig"));
     }
@@ -18,9 +21,9 @@ public class GameplayManager : BaseManager
         base.CreateManagerNecessary();
         
         //find better way to subscribe
-        UIGameplayHudPanel gameplayController = Object.Instantiate(Resources.Load<UIGameplayHudPanel>("UI Gameplay Controller"));
-        gameplayController.Create(RootObject.transform);
-        UIControllerSystem.Instance.GameplayController = gameplayController;
+        UIGameplayHud = Object.Instantiate(Resources.Load<UIGameplayHudPanel>("UI Gameplay Hud Panel"));
+        UIGameplayHud.Create(RootObject.transform);
+        UIControllerSystem.Instance.GameplayController = UIGameplayHud;
     }
     
     protected override void OnEnable()
