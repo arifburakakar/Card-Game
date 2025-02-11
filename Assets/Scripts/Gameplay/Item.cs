@@ -19,6 +19,16 @@ public class Item : MonoBehaviour, IPoolable
         OnSpawn();
     }
 
+    public virtual void Select()
+    {
+        
+    }
+
+    public virtual void Deselect()
+    {
+        
+    }
+
     protected virtual void OnSpawn()
     {
         

@@ -1,3 +1,4 @@
+using PrimeTween;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -5,16 +6,19 @@ public partial class Game
 {
     private Item selectedItem;
     private Vector3[] slotPoints;
-    private Item[] cards; // may be linklist
+    private Item[] cards; // may be linklist for swap 
     private Vector3 centerPoint;
-    
+    private float deltaWidth;
+    private Item currentLeftNeighbor;
+    private Item currentRightNeighbor;
+    private bool neighborsActive;
 
     private void CreateSlots()
     {
         slotPoints = new Vector3[gameplayManager.GameplayConfig.DefaultHandCount];
         cards = new Item[slotPoints.Length];
         centerPoint = new Vector3(boardProxy.HandPoint.transform.position.x,boardProxy.HandPoint.transform.position.y + gameplayManager.GameplayConfig.HandYPosition);
-        float deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
+        deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
         Vector3 leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
 
         for (int i = 0; i < slotPoints.Length; i++)
@@ -26,7 +30,7 @@ public partial class Game
 
     private async void AddCardToSlot(BaseCard item, int index)
     {
-        await item.PlayOpenAnimation(gameplayManager.GameplayConfig);
+        await item.PlayOpenAnimation();
         cards[index] = item;
     }
     
@@ -35,7 +39,7 @@ public partial class Game
         for (int i = 0; i < cards.Length; i++)
         {
             Item card = cards[i];
-            if (card == null)
+            if (card == null || card == selectedItem)
                 continue;
             
             card.SetPosition(Vector3.MoveTowards(card.transform.position, GetTargetCurvePosition(i), Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed));
@@ -78,6 +82,8 @@ public partial class Game
 
     private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
+        
+        // fix here
         float u = 1 - t;
         float uu = u * u;
         float uuu = uu * u;
@@ -91,9 +97,121 @@ public partial class Game
 
         return point;
     }
-
-    private Item SelectCard()
+    
+    private void TrySelectCard(Vector2 inputPosition)
     {
-        return null;
+        // find better way without raycast and collider, pointerclick, position check?
+
+        RaycastHit2D hit = Physics2D.Raycast(inputPosition, Vector2.zero, 10);
+        if (hit)
+        {
+            Item item = hit.transform.GetComponent<Item>();
+            if (item)
+            {
+                selectedItem = item;
+                selectedItem.Select();
+            }
+        }
+    }
+    
+    private int GetItemIndex()
+    {
+        for (int i = 0; i < cards.Length; i++)
+        {
+            if (selectedItem == cards[i])
+            {
+                return i;
+            }
+        }
+
+        return -1; // exception
+    }
+
+    private void TryUpdateSelectedCard(Vector2 inputPosition)
+    {
+        if (!selectedItem)
+        {
+            return;
+        }
+
+        Vector3 targetPosition = new Vector3(inputPosition.x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
+        selectedItem.SetPosition(Vector3.Lerp(selectedItem.transform.position, targetPosition, Time.deltaTime * gameplayManager.GameplayConfig.DragSpeed));
+        selectedItem.SetRotation(Vector3.forward * CalculateZRotation(selectedItem.transform.position));
+
+        int currentIndex = GetItemIndex();
+        Item newLeft = currentIndex > 0 ? cards[currentIndex - 1] : null;
+        Item newRight = currentIndex < cards.Length - 1 ? cards[currentIndex + 1] : null;
+        if (currentLeftNeighbor != newLeft || currentRightNeighbor != newRight)
+        {
+            ResetCurrentNeighbors();
+            currentLeftNeighbor = newLeft;
+            currentRightNeighbor = newRight;
+            ActivateNewNeighbors();
+        }
+        
+        if (currentIndex < slotPoints.Length - 1)
+        {
+            float midpointRight = (slotPoints[currentIndex].x + slotPoints[currentIndex + 1].x) / 2f;
+            if (selectedItem.transform.position.x > midpointRight)
+            {
+                ChangeItems(currentIndex, currentIndex + 1);
+            }
+        }
+        
+        if (currentIndex > 0)
+        {
+            float midpointLeft = (slotPoints[currentIndex - 1].x + slotPoints[currentIndex].x) / 2f;
+            if (selectedItem.transform.position.x < midpointLeft)
+            {
+                ChangeItems(currentIndex - 1, currentIndex);
+            }
+        }
+    }
+    
+    private void ResetCurrentNeighbors()
+    {
+        if (currentLeftNeighbor != null)
+        {
+            currentLeftNeighbor.SetScale(Vector3.one);;
+            currentLeftNeighbor = null;
+        }
+        
+        if (currentRightNeighbor != null)
+        {
+            currentRightNeighbor.SetScale(Vector3.one);;
+            currentRightNeighbor = null;
+        }
+        
+        neighborsActive = false;
+    }
+
+    private void ActivateNewNeighbors()
+    {
+        if (selectedItem == null) return;
+
+        neighborsActive = true;
+        
+        if (currentLeftNeighbor != null)
+            currentLeftNeighbor.SetScale( Vector3.one * 1.25f);;
+        
+        if (currentRightNeighbor != null)
+            currentRightNeighbor.SetScale( Vector3.one * 1.25f);;
+    }
+
+    private void ChangeItems(int indexA, int indexB)
+    {
+        (cards[indexA], cards[indexB]) = (cards[indexB], cards[indexA]);
+    }
+
+    private void TryDeselectCard()
+    {
+        if (!selectedItem)
+        {
+            return;
+        }
+        
+        ResetCurrentNeighbors();
+        selectedItem.Deselect();
+        selectedItem = null;
     }
 }

@@ -1,6 +1,5 @@
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Gameplay Config", menuName = "GameplayConfig", order = 0)]
 public class GameplayConfig : ScriptableObject
@@ -16,13 +15,15 @@ public class GameplayConfig : ScriptableObject
     public int DefaultHandCount = 11;
     public float CardSlotMovementSpeed = 10;
     public float cardOpenDuration = .20f;
-    public Ease cardOpenEase = Ease.Linear;
+    public AnimationCurve CardOpenCurve;
+    public float DragSpeed = 100;
+    public float SelectHeightOffset = .75f;
 
     [Header("Deal Animation")] 
     public float DealCardTargetOffsetHeight = 1;
     public float CardDealMovementDuration = 1;
     public float CardRotationAmaount = 4;
-    public Ease CardRotationEase;
+    public AnimationCurve CardRotationEase;
     public AnimationCurve CardXMovementCurve;
     public AnimationCurve CardYMovementCurve;
 }

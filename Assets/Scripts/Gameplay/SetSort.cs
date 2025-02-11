@@ -28,7 +28,7 @@ public class SetSort : ISort
                 }
             }
 
-            if (groupCount >= 1)
+            if (groupCount >= 2)
             {
                 sortedHand.Add(oid);
             }

@@ -161,13 +161,13 @@ public class SmartSort : ISort
         List<List<OID>> subs = new List<List<OID>>();
         for (int i = 0; i < sortedHand.Count; i++)
         {
-            AddSubsets(sortedHand[i], subs);
+            AddRunSubsets(sortedHand[i], subs);
         }
         
         return subs;
     }
     
-    private void AddSubsets(List<OID> tempGroup, List<List<OID>> sortedHand)
+    private void AddRunSubsets(List<OID> tempGroup, List<List<OID>> sortedHand)
     {
         int n = tempGroup.Count;
         

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class Game
 {
-    private async void StartDealSequence()
+    private async void StartVisualDealSequence()
     {
         Debug.Log("Deal Start");
         

@@ -66,4 +66,12 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
         
         IsMetaActive = false;
     }
+
+
+    //temp
+    public Game GetGame()
+    {
+       var manager = (GameplayManager)gameplayManager;
+       return manager.ActiveGame;
+    }
 }

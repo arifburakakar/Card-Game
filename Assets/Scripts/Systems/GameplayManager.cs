@@ -7,6 +7,8 @@ public class GameplayManager : BaseManager
     public PoolHandler PoolHandler { get; private set; }
     private Game activeGame;
     public UIGameplayHudPanel UIGameplayHud;
+
+    public Game ActiveGame => activeGame;
     
     protected override void OnInitialize()
     {

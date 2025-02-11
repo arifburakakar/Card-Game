@@ -24,20 +24,18 @@ public partial class Game
         boardProxy = gameplayManager.UIGameplayHud.boardProxy;
         GameObject dealerDeck = Object.Instantiate(gameplayManager.GameplayConfig.DealerDeck, gameContainer.transform);
         dealerDeck.transform.position = boardProxy.DealerPoint.position;
+        
+        InitializeInput();
     }
 
     public void StartGame()
     {
         dealer = new Dealer();
         player = new Player();
-        
         dealer.AddPlayer(player);
         dealer.DealCards();
-        
-        
         CreateSlots();
-        StartDealSequence();
-
+        StartVisualDealSequence();
         isGameRunning = true;
     }
 
@@ -53,12 +51,14 @@ public partial class Game
     public void Clear()
     {
         Main.Instance.MainUpdate -= UpdateGame;
+        ResetInput();
     }
 }
 
 // card donme animasyonu // z rot issue
 // runtime slot position calculate
-// cardlari dagismasi
-// transitaionlari oynadiktan sonra kapat
 // item data pass in pool
 // smart sort refactor 
+// sorts her seferinde degismesi sorunu
+// sort gruplarini output yap
+// card selection bug offset

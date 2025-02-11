@@ -18,13 +18,25 @@ MonoBehaviour:
   HandArcAngle: 40
   RotationMultiplier: 10
   DefaultHandCount: 11
-  CardSlotMovementSpeed: 250
+  CardSlotMovementSpeed: 20
   cardOpenDuration: 0.2
-  cardOpenEase: 1
+  CardOpenCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DragSpeed: 100
+  SelectHeightOffset: 0.75
   DealCardTargetOffsetHeight: 1.5
-  CardDealMovementDuration: 0.4
-  CardRotationAmaount: 360
-  CardRotationEase: 21
+  CardDealMovementDuration: 0.65
+  CardRotationAmaount: 180
+  CardRotationEase:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   CardXMovementCurve:
     serializedVersion: 2
     m_Curve:

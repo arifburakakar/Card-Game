@@ -306,9 +306,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMetaController, Assembly-CSharp
-        m_MethodName: OnClickPlay
+      - m_Target: {fileID: 3300636506066269648}
+        m_TargetAssemblyTypeName: UIGameplayHudPanel, Assembly-CSharp
+        m_MethodName: OnClickSet
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -978,9 +978,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMetaController, Assembly-CSharp
-        m_MethodName: OnClickPlay
+      - m_Target: {fileID: 3300636506066269648}
+        m_TargetAssemblyTypeName: UIGameplayHudPanel, Assembly-CSharp
+        m_MethodName: OnClickRun
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1229,9 +1229,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMetaController, Assembly-CSharp
-        m_MethodName: OnClickPlay
+      - m_Target: {fileID: 3300636506066269648}
+        m_TargetAssemblyTypeName: UIGameplayHudPanel, Assembly-CSharp
+        m_MethodName: OnClickSmart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

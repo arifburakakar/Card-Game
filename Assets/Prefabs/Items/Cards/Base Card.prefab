@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6700177577943735919}
   - component: {fileID: 4423502670444051217}
   - component: {fileID: 3286975955385208569}
+  - component: {fileID: 5854107260599827650}
+  - component: {fileID: 5347401528470211300}
   m_Layer: 0
   m_Name: Base Card
   m_TagString: Untagged
@@ -31,7 +33,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.786659, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -55,6 +57,13 @@ MonoBehaviour:
   GFX: {fileID: 3286975955385208569}
   defaultSprite: {fileID: 21300000, guid: c9dc50ee790a74d2eb767dcd3b854a42, type: 3}
   backgroundSprite: {fileID: 21300000, guid: 949ab4068e2f84773962400a202ea9ec, type: 3}
+  animation: {fileID: 5347401528470211300}
+  flipInAnimation: {fileID: 7400000, guid: 8d2fd8d61372e4f599a1999cc5fe20ec, type: 2}
+  flipOutAnimation: {fileID: 7400000, guid: d493285261a5f4c0987a3797ddcd107f, type: 2}
+  rotateAnimation: {fileID: 7400000, guid: e101c5303003a4657989fe336a5fa133, type: 2}
+  selectScale: 1.45
+  scaleDuration: 0.1
+  scaleEase: 0
 --- !u!212 &3286975955385208569
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -107,3 +116,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5854107260599827650
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816230304997604880}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 2.17}
+    newSize: {x: 1.5, y: 2.17}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2.17}
+  m_EdgeRadius: 0
+--- !u!111 &5347401528470211300
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816230304997604880}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e101c5303003a4657989fe336a5fa133, type: 2}
+  - {fileID: 7400000, guid: 8d2fd8d61372e4f599a1999cc5fe20ec, type: 2}
+  - {fileID: 7400000, guid: d493285261a5f4c0987a3797ddcd107f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

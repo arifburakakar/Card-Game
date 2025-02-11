@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Main : MonoBehaviour
+public partial class Main : MonoBehaviour
 {
     public static Main Instance;
     
@@ -25,6 +25,7 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
+        InitializeInput();
         InitializeInstances();
         StartGame();
     }
@@ -32,6 +33,7 @@ public class Main : MonoBehaviour
     private void Update()
     {
         MainUpdate?.Invoke();
+        HandleInput();
     }
 
     private void FixedUpdate()
