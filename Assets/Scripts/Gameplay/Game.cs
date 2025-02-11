@@ -22,7 +22,7 @@ public partial class Game
         gameContainer = new GameObject("Game");
         gameContainer.transform.SetParent(gameplayManager.RootObject.transform);
         boardProxy = gameplayManager.UIGameplayHud.boardProxy;
-        GameObject dealerDeck = Object.Instantiate(gameplayManager.GameplayConfig.DealerDeck);
+        GameObject dealerDeck = Object.Instantiate(gameplayManager.GameplayConfig.DealerDeck, gameContainer.transform);
         dealerDeck.transform.position = boardProxy.DealerPoint.position;
     }
 
@@ -56,9 +56,8 @@ public partial class Game
     }
 }
 
-// card donme animasyonu
-// card gitme animasyonu
-// card slotlari olusturmasi 
+// card donme animasyonu // z rot issue
+// runtime slot position calculate
 // cardlari dagismasi
 // transitaionlari oynadiktan sonra kapat
 // item data pass in pool

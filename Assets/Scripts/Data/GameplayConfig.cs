@@ -11,7 +11,8 @@ public class GameplayConfig : ScriptableObject
     [Header("Hand")] 
     public float HandWidth = 30;
     public float HandYPosition = 300;
-    public float HandArcAmount = 30;
+    public float HandArcAngle = 60;
+    public float RotationMultiplier = 30;
     public int DefaultHandCount = 11;
     public float CardSlotMovementSpeed = 10;
     public float cardOpenDuration = .20f;

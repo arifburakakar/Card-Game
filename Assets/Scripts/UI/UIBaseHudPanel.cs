@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,14 +12,16 @@ public class UIBaseHudPanel : MonoBehaviour , IUIHudPanel
         transform.SetParent(rootTransform);
     }
 
-    public float Transition(bool toggle)
+    public async UniTask Transition(bool toggle)
     {
         if (toggle)
         {
-            return TransitionHandler.FadeIn();
+            await TransitionHandler.FadeIn();
         }
-        
-        return TransitionHandler.FadeOut();
+        else
+        {
+            await TransitionHandler.FadeOut();
+        }
     }
     
     public void Open()

@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,10 +16,9 @@ public class UIControllerSystem : SingletonGameSystem <UIControllerSystem>
         base.OnInitialize();
     }
     
-    public IEnumerator PlayTransition(bool toggle)
+    public async UniTask PlayTransition(bool toggle)
     {
-        float duration = activeController.Transition(toggle);
-        yield return new WaitForSeconds(duration);
+        await activeController.Transition(toggle);
     }
     
     public void OpenGameplay()

@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,19 +11,19 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
     private IManager gameplayManager;
 
 
-    public IEnumerator LoadMain()
+    public async void LoadMain()
     {
         bool hasActiveScreen = UIControllerSystem.Instance.HasActiveScreen;
         
         if (hasActiveScreen)
         {
-            yield return UIControllerSystem.Instance.PlayTransition(true);
+            await UIControllerSystem.Instance.PlayTransition(true);
         }
 
         //todo repeat load gameplay fix it 
         if (metaManager == null)
         {
-            yield return SceneManager.LoadSceneAsync(Main.Instance.MetaSceneName);
+            await SceneManager.LoadSceneAsync(Main.Instance.MetaSceneName);
             metaManager = new MetaManager();
             metaManager.Initialize(SceneManager.GetSceneByName(Main.Instance.MetaSceneName));
             metaManager.CreateManagerNecessary();
@@ -35,7 +36,7 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
         
         if (hasActiveScreen)
         {
-            yield return UIControllerSystem.Instance.PlayTransition(false);
+            await UIControllerSystem.Instance.PlayTransition(false);
         }
         
         metaManager.Execute();
@@ -43,13 +44,13 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
         IsMetaActive = true;
     }
 
-    public IEnumerator LoadGameplay()
+    public async void LoadGameplay()
     {
-        yield return UIControllerSystem.Instance.PlayTransition(true);
+        await UIControllerSystem.Instance.PlayTransition(true);
         
         if (gameplayManager == null)
         {
-            yield return SceneManager.LoadSceneAsync(Main.Instance.GameplaySceneName, LoadSceneMode.Additive);
+            await SceneManager.LoadSceneAsync(Main.Instance.GameplaySceneName, LoadSceneMode.Additive);
             gameplayManager = new GameplayManager();
             gameplayManager.Initialize(SceneManager.GetSceneByName(Main.Instance.GameplaySceneName));
             gameplayManager.CreateManagerNecessary();
@@ -59,7 +60,7 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
         metaManager.Disable();
         gameplayManager.Enable();
         
-        yield return UIControllerSystem.Instance.PlayTransition(false);
+        await UIControllerSystem.Instance.PlayTransition(false);
         
         gameplayManager.Execute();
         

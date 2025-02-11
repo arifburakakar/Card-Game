@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DealerDeck: {fileID: 2669105918075335236, guid: 12c06e2d3eecd4bdea2af916ad6245f6, type: 3}
   HandWidth: 10
-  HandYPosition: 2
+  HandYPosition: 1.5
+  HandArcAngle: 40
+  RotationMultiplier: 10
   DefaultHandCount: 11
   CardSlotMovementSpeed: 250
   cardOpenDuration: 0.2
   cardOpenEase: 1
-  DealCardTargetOffsetHeight: 0.5
+  DealCardTargetOffsetHeight: 1.5
   CardDealMovementDuration: 0.4
   CardRotationAmaount: 360
   CardRotationEase: 21

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UITransitionHandler : MonoBehaviour
@@ -13,17 +14,23 @@ public class UITransitionHandler : MonoBehaviour
     [SerializeField] 
     private AnimationClip fadeOutClip;
     
-    public float FadeIn()
+    public async UniTask FadeIn()
     {
         transitionContainer.SetActive(true);
         animation.Play(fadeInClip.name);
-        return fadeInClip.length;
+        await Yield.WaitForSeconds(fadeInClip.length);
     }
 
-    public float FadeOut()
+    public void ResetTransition()
+    {
+        transitionContainer.SetActive(false);
+    }
+
+    public async UniTask FadeOut()
     {
         transitionContainer.SetActive(true);
         animation.Play(fadeOutClip.name);
-        return fadeOutClip.length;
+        await Yield.WaitForSeconds(fadeOutClip.length);
+        ResetTransition();
     }
 }

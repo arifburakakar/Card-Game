@@ -7,6 +7,7 @@ public partial class Game
     private Vector3[] slotPoints;
     private Item[] cards; // may be linklist
     private Vector3 centerPoint;
+    
 
     private void CreateSlots()
     {
@@ -33,23 +34,66 @@ public partial class Game
     {
         for (int i = 0; i < cards.Length; i++)
         {
-            // temp
             Item card = cards[i];
             if (card == null)
-            {
                 continue;
-            }
-            card.SetPosition(Vector3.MoveTowards(card.transform.position,  slotPoints[i], Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed)); 
+            
+            card.SetPosition(Vector3.MoveTowards(card.transform.position, GetTargetCurvePosition(i), Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed));
+            card.SetRotation(Vector3.forward * CalculateZRotation(card.transform.position));
         }
     }
-
-    private Vector3 GetTargetCurvePosition()
+    
+    private Vector3 GetTargetCurvePosition(int index)
     {
-        return Vector3.zero;
+        int slotCount = slotPoints.Length;
+
+        if (slotCount == 0)
+            return centerPoint;
+
+        if (slotCount == 1)
+            return centerPoint;
+
+        float t = (float)index / (slotCount - 1);
+
+        float handWidth = gameplayManager.GameplayConfig.HandWidth;
+        Vector3 startPoint = centerPoint + Vector3.left * handWidth * 0.5f;
+        Vector3 endPoint = centerPoint + Vector3.right * handWidth * 0.5f;
+
+        float theta = gameplayManager.GameplayConfig.HandArcAngle * Mathf.Deg2Rad;
+        float radius = handWidth / (2 * Mathf.Sin(theta * 0.5f));
+        float curveHeight = radius * (1 - Mathf.Cos(theta * 0.5f));
+
+        Vector3 controlPoint1 = startPoint + new Vector3(handWidth * 0.25f, curveHeight, 0);
+        Vector3 controlPoint2 = endPoint - new Vector3(handWidth * 0.25f, -curveHeight, 0);
+
+        return CalculateCubicBezierPoint(t, startPoint, controlPoint1, controlPoint2, endPoint);
+    }
+    
+    private float CalculateZRotation(Vector3 cardPosition)
+    {
+        float horizontalDistance = (cardPosition.x - centerPoint.x) / (gameplayManager.GameplayConfig.HandWidth * 0.5f);
+        float rotationZ = Mathf.Sin(horizontalDistance * (Mathf.PI * 0.5f)) * -gameplayManager.GameplayConfig.RotationMultiplier;
+        return rotationZ;
     }
 
-    private void SelectCard()
+    private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        
+        float u = 1 - t;
+        float uu = u * u;
+        float uuu = uu * u;
+        float tt = t * t;
+        float ttt = tt * t;
+
+        Vector3 point = uuu * p0;
+        point += 3 * uu * t * p1;
+        point += 3 * u * tt * p2; 
+        point += ttt * p3;
+
+        return point;
+    }
+
+    private Item SelectCard()
+    {
+        return null;
     }
 }

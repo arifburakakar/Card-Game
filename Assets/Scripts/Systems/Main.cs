@@ -74,6 +74,6 @@ public class Main : MonoBehaviour
 
     private void StartGame()
     {
-        CoroutineHandler.Instance.Begin(GameControllerSystem.Instance.LoadMain());
+        GameControllerSystem.Instance.LoadMain();
     }
 }
