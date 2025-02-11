@@ -7,6 +7,8 @@ public partial class Game
     private BoardProxy boardProxy;
     private Player player;
     private Dealer dealer;
+
+    private bool isGameRunning = false;
     
     public Game(GameplayManager gameplayManager)
     {
@@ -20,6 +22,8 @@ public partial class Game
         gameContainer = new GameObject("Game");
         gameContainer.transform.SetParent(gameplayManager.RootObject.transform);
         boardProxy = gameplayManager.UIGameplayHud.boardProxy;
+        GameObject dealerDeck = Object.Instantiate(gameplayManager.GameplayConfig.DealerDeck);
+        dealerDeck.transform.position = boardProxy.DealerPoint.position;
     }
 
     public void StartGame()
@@ -33,10 +37,16 @@ public partial class Game
         
         CreateSlots();
         StartDealSequence();
+
+        isGameRunning = true;
     }
 
     private void UpdateGame()
     {
+        if (!isGameRunning)
+        {
+            return;
+        }
         UpdateHandCardPositions();
     }
     

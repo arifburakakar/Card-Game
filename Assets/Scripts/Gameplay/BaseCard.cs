@@ -13,9 +13,15 @@ public class BaseCard : Item
         GFX.sprite = backgroundSprite;
     }
 
-    public UniTask PlayOpenAnimation()
+    public async UniTask PlayOpenAnimation(GameplayConfig gameplayConfig)
     {
-        return Yield.WaitForSeconds(1);
+        Vector3 targetRotation = new Vector3(90, 0, 0);
+        Vector3 lastRotation = new Vector3(0, 0, 0);
+        Sequence dealSequence = Sequence.Create();
+        dealSequence.Chain(Tween.Rotation(transform, transform.eulerAngles,targetRotation , gameplayConfig.cardOpenDuration * .5f, gameplayConfig.cardOpenEase)
+            .OnComplete(() => UpdateGFX(defaultSprite)));
+        dealSequence.Chain(Tween.EulerAngles(transform, transform.eulerAngles,lastRotation , gameplayConfig.cardOpenDuration * .5f, gameplayConfig.CardYMovementCurve));
+        await dealSequence;
     }
 
     public async UniTask PlayDealAnimation(Vector3 targetPosition, GameplayConfig gameplayConfig)

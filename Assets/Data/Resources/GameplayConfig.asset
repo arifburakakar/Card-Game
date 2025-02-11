@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2291bf4b0c404c1b947d0de6aee45a1c, type: 3}
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
-  boardProxy: {fileID: 7722051862730273837, guid: 0a92b0e8cf30f4c95b9eaf8618115389, type: 3}
+  DealerDeck: {fileID: 2669105918075335236, guid: 12c06e2d3eecd4bdea2af916ad6245f6, type: 3}
   HandWidth: 10
   HandYPosition: 2
   DefaultHandCount: 11
-  CardDealMovementDuration: 0.65
+  CardSlotMovementSpeed: 250
+  cardOpenDuration: 0.2
+  cardOpenEase: 1
+  DealCardTargetOffsetHeight: 0.5
+  CardDealMovementDuration: 0.4
   CardRotationAmaount: 360
-  CardRotationEase: 6
+  CardRotationEase: 21
   CardXMovementCurve:
     serializedVersion: 2
     m_Curve:
