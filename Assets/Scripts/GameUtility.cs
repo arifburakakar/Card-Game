@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Scripting;
 using Random = System.Random;
 
 public static class GameUtility
@@ -101,7 +103,6 @@ public static class GameUtility
     {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
         GC.Collect(0, GCCollectionMode.Forced);
-        Debug.Log("GC Collect Forced");
 #endif
     }
 
