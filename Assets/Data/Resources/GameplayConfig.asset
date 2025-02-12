@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
   DealerDeck: {fileID: 2669105918075335236, guid: 12c06e2d3eecd4bdea2af916ad6245f6, type: 3}
-  HandWidth: 10
+  HandWidth: 9
   HandYPosition: 1.5
   HandArcAngle: 27.4
-  RotationMultiplier: 7.7
+  RotationMultiplier: 8.93
   DefaultHandCount: 11
   CardSlotMovementSpeed: 15
   DragSpeed: 20
