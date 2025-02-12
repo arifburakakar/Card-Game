@@ -26,6 +26,7 @@ public partial class Game
         dealerDeck.transform.position = boardProxy.DealerPoint.position;
         
         InitializeInput();
+        Main.Instance.SetInputEnable(false);
     }
 
     public void StartGame()
@@ -45,20 +46,18 @@ public partial class Game
         {
             return;
         }
-        UpdateHandCardPositions();
+        
+        UpdatePositions();
     }
     
     public void Clear()
     {
         Main.Instance.MainUpdate -= UpdateGame;
         ResetInput();
+        Object.Destroy(gameContainer);
     }
 }
 
-// card donme animasyonu // z rot issue
-// runtime slot position calculate
-// item data pass in pool
-// smart sort refactor 
-// sorts her seferinde degismesi sorunu
-// sort gruplarini output yap
-// card selection bug offset
+// arc update
+// raycast imput
+// test

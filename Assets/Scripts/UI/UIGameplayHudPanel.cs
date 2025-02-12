@@ -11,17 +11,24 @@ public class UIGameplayHudPanel : UIBaseHudPanel
 
     public void OnClickSet()
     {
-        GameControllerSystem.Instance.GetGame().SetSort();
+       GameplayManager gameplayManager = (GameplayManager) GameControllerSystem.Instance.GameplayManager;
+       gameplayManager.ActiveGame.SetSort();
     }
 
     public void OnClickRun()
     {
-        GameControllerSystem.Instance.GetGame().RunSort();
-
+        GameplayManager gameplayManager = (GameplayManager) GameControllerSystem.Instance.GameplayManager;
+        gameplayManager.ActiveGame.RunSort();
     }
 
     public void OnClickSmart()
     {
-        GameControllerSystem.Instance.GetGame().SmartSort();
+        GameplayManager gameplayManager = (GameplayManager) GameControllerSystem.Instance.GameplayManager;
+        gameplayManager.ActiveGame.SmartSort();
+    }
+
+    public void OnClickLoadMeta()
+    {
+        GameControllerSystem.Instance.LoadMeta();
     }
 }

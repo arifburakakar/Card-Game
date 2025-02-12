@@ -24,7 +24,16 @@ public class Player
 
     public void SortHand(ISort sort)
     {
-        hand = sort.Sort(hand);
+       (List<List<OID>> groups, List<OID> deadwood) sortResult = sort.Sort(hand);
+       
+       List<OID> temp = new List<OID>();
+       foreach (List<OID> groups in sortResult.groups)
+       {
+           temp.AddRange(groups);
+       }
+       temp.AddRange(sortResult.deadwood);
+
+       hand = temp;
     }
 
     public void PrintHand()

@@ -20,6 +20,8 @@ public partial class Game
         }
         
         Debug.Log("Deal End");
+         
+        Main.Instance.SetInputEnable(true);
     }
 
     private Vector3 CalculateCardTargetPosition(Vector3 targetPoint)

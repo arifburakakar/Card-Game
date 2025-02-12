@@ -76,6 +76,6 @@ public partial class Main : MonoBehaviour
 
     private void StartGame()
     {
-        GameControllerSystem.Instance.LoadMain();
+        GameControllerSystem.Instance.LoadMeta();
     }
 }

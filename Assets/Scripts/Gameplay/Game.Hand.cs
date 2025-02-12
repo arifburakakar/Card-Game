@@ -12,6 +12,7 @@ public partial class Game
     private Item currentLeftNeighbor;
     private Item currentRightNeighbor;
     private bool neighborsActive;
+    private Vector3 leftSide;
 
     private void CreateSlots()
     {
@@ -19,7 +20,7 @@ public partial class Game
         cards = new Item[slotPoints.Length];
         centerPoint = new Vector3(boardProxy.HandPoint.transform.position.x,boardProxy.HandPoint.transform.position.y + gameplayManager.GameplayConfig.HandYPosition);
         deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
-        Vector3 leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
+        leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
 
         for (int i = 0; i < slotPoints.Length; i++)
         {
@@ -34,13 +35,24 @@ public partial class Game
         cards[index] = item;
     }
     
-    private void UpdateHandCardPositions()
+    private void UpdatePositions()
     {
-        for (int i = 0; i < cards.Length; i++)
+        // changeable width run time
+        deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
+        leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
+        
+        for (int i = 0; i < slotPoints.Length; i++)
         {
+            Vector3 slotPosition = leftSide + Vector3.right * deltaWidth * i;
+            slotPoints[i] =  GetTargetCurvePosition(i);
             Item card = cards[i];
-            if (card == null || card == selectedItem)
+            if (card == null)
                 continue;
+
+            if (card == selectedItem)
+            {
+                continue;
+            }
             
             card.SetPosition(Vector3.MoveTowards(card.transform.position, GetTargetCurvePosition(i), Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed));
             card.SetRotation(Vector3.forward * CalculateZRotation(card.transform.position));
@@ -82,13 +94,11 @@ public partial class Game
 
     private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        
-        // fix here
         float u = 1 - t;
-        float uu = u * u;
-        float uuu = uu * u;
-        float tt = t * t;
-        float ttt = tt * t;
+        float uu = Mathf.Pow(u, 2);
+        float uuu = Mathf.Pow(u, 3);
+        float tt = Mathf.Pow(t, 2);
+        float ttt = Mathf.Pow(t, 3);
 
         Vector3 point = uuu * p0;
         point += 3 * uu * t * p1;
@@ -133,8 +143,9 @@ public partial class Game
         {
             return;
         }
-
-        Vector3 targetPosition = new Vector3(inputPosition.x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
+        
+        
+        Vector3 targetPosition = new Vector3(isDrag ? inputPosition.x : slotPoints[GetItemIndex()].x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
         selectedItem.SetPosition(Vector3.Lerp(selectedItem.transform.position, targetPosition, Time.deltaTime * gameplayManager.GameplayConfig.DragSpeed));
         selectedItem.SetRotation(Vector3.forward * CalculateZRotation(selectedItem.transform.position));
 
@@ -172,13 +183,13 @@ public partial class Game
     {
         if (currentLeftNeighbor != null)
         {
-            currentLeftNeighbor.SetScale(Vector3.one);;
+            currentLeftNeighbor.ScaleAnimation(1, .1f);
             currentLeftNeighbor = null;
         }
         
         if (currentRightNeighbor != null)
         {
-            currentRightNeighbor.SetScale(Vector3.one);;
+            currentRightNeighbor.ScaleAnimation(1, .1f);
             currentRightNeighbor = null;
         }
         
@@ -192,10 +203,10 @@ public partial class Game
         neighborsActive = true;
         
         if (currentLeftNeighbor != null)
-            currentLeftNeighbor.SetScale( Vector3.one * 1.25f);;
+            currentLeftNeighbor.ScaleAnimation(1.15f, .1f);
         
         if (currentRightNeighbor != null)
-            currentRightNeighbor.SetScale( Vector3.one * 1.25f);;
+            currentRightNeighbor.ScaleAnimation(1.15f, .1f);
     }
 
     private void ChangeItems(int indexA, int indexB)

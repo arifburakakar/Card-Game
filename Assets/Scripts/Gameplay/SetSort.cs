@@ -1,45 +1,56 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
-public class SetSort : ISort
+public class SetSort : BaseSort
 {
-    public List<OID> Sort(List<OID> hand)
+    public override (List<List<OID>>,List<OID>) Sort(List<OID> hand)
     {
+        List<List<OID>> groups = new List<List<OID>>();
         List<OID> sortedHand = new List<OID>();
-        List<OID> deadwoodCards = new List<OID>();
+        List<int> ids = new List<int>();
         
         for (int i = 0; i < hand.Count; i++)
         {
             OID oid = hand[i];
             
-            if (sortedHand.Contains(oid))
+            if (ids.Contains(oid.VariantID))
             {
                 continue;
             }
-
-            int groupCount = 0;
+            
+            List<OID> oids = new List<OID>();
+            oids.Add(oid);
+            int groupCount = 1;
              
             for (int j = i + 1; j < hand.Count; j++)
             {
                 OID nextOID = hand[j];
                 if (nextOID.VariantID == oid.VariantID)
                 {
-                    sortedHand.Add(nextOID);
+                    oids.Add(nextOID);
                     groupCount++;
                 }
             }
 
-            if (groupCount >= 2)
+            if (groupCount >= 3)
             {
-                sortedHand.Add(oid);
-            }
-            else
-            {
-                deadwoodCards.Add(oid);
+                ids.Add(oid.VariantID);
+                groups.Add(oids);
             }
         }
         
-        sortedHand.AddRange(deadwoodCards);
-
-        return sortedHand;
+        var deadwood = Deadwood(hand, groups);
+        
+        return (groups, deadwood);
+    }
+    
+    private int GetGroupSum(List<OID> group)
+    {
+        int sum = 0;
+        foreach (OID item in group)
+        {
+            sum += item.GetValue();
+        }
+        return sum;
     }
 }

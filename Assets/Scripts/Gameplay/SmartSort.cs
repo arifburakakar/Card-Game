@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SmartSort : ISort
+public class SmartSort : BaseSort
 {
-    public List<OID> Sort(List<OID> hand)
+    public override (List<List<OID>>,List<OID>) Sort(List<OID> hand)
     {
         List<List<OID>> setGroups = FindAllPossibleSets(hand);
         List<List<OID>> runGroups = FindAllPossibleRuns(hand);
@@ -34,23 +34,13 @@ public class SmartSort : ISort
             }
         }
 
-        List<OID> sortedHand = new List<OID>();
-        List<OID> deadwood = new List<OID>(hand);
         List<List<OID>> bestCombination = allCombinations[bestCombinationIndex];
-        for (int i = 0; i < bestCombination.Count; i++)
-        {
-            List<OID> group = bestCombination[i];
-            for (int j = 0; j < group.Count; j++)
-            {
-                OID oid = group[j];
-                sortedHand.Add(oid);
-                deadwood.Remove(oid);
-            }
-        }
-         
-        sortedHand.AddRange(deadwood);
-        return sortedHand;
+        var deadwood = Deadwood(hand, bestCombination);
+
+        return (bestCombination, deadwood);
     }
+
+ 
 
     private List<List<OID>> FindAllPossibleSets(List<OID> hand)
     {
@@ -67,7 +57,8 @@ public class SmartSort : ISort
             }
 
             List<OID> oids = new List<OID>();
-            int groupCount = 0;
+            oids.Add(oid);
+            int groupCount = 1;
              
             for (int j = i + 1; j < hand.Count; j++)
             {
@@ -79,9 +70,8 @@ public class SmartSort : ISort
                 }
             }
 
-            if (groupCount >= 2)
+            if (groupCount >= 3)
             {
-                oids.Add(oid);
                 ids.Add(oid.VariantID);
 
                 if (oids.Count == 4)

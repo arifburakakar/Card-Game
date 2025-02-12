@@ -71,7 +71,7 @@ public class GenericObjectPool<T> where T : Component , IPoolable
          
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(poolTransform);
-        obj.OnDespawn();
+        obj.Despawn();
         objects.Push(obj);
     }
 

@@ -2,5 +2,6 @@ using System.Collections.Generic;
 
 public interface ISort
 {
-    List<OID> Sort(List<OID> hand);
+    //sort groups and deadwood group
+    (List<List<OID>> groups, List<OID> deadwood) Sort(List<OID> hand);
 }

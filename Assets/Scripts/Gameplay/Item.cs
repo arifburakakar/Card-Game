@@ -1,3 +1,4 @@
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class Item : MonoBehaviour, IPoolable
     public SpriteRenderer GFX; // change with sprite
     public Sprite defaultSprite;
     public Sprite backgroundSprite;
+
+    private Tween scaleTween;
     
     public void Create()
     {
@@ -36,7 +39,6 @@ public class Item : MonoBehaviour, IPoolable
 
     public void UpdateGFX(Sprite sprite)
     {
-        GFX.sprite = sprite;
         defaultSprite = sprite;
     }
 
@@ -55,14 +57,20 @@ public class Item : MonoBehaviour, IPoolable
         transform.localScale = scale;
     }
 
+    public void ScaleAnimation(float scale, float duration)
+    {
+        scaleTween.Complete();
+        scaleTween = Tween.Scale(transform, scale, duration);
+    }
+
     public void Despawn()
     {
-        // return to pool
         OnDespawn();
     }
 
-    public virtual void OnDespawn()
+    protected virtual void OnDespawn()
     {
+        // return to pool
         
     }
 }

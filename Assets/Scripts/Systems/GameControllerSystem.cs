@@ -7,11 +7,10 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
 {
     public bool IsMetaActive { get; private set; }
 
-    private IManager metaManager;
-    private IManager gameplayManager;
-
-
-    public async void LoadMain()
+    public IManager MetaManager;
+    public IManager GameplayManager;
+    
+    public async void LoadMeta()
     {
         bool hasActiveScreen = UIControllerSystem.Instance.HasActiveScreen;
         
@@ -21,17 +20,17 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
         }
 
         //todo repeat load gameplay fix it 
-        if (metaManager == null)
+        if (MetaManager == null)
         {
             await SceneManager.LoadSceneAsync(Main.Instance.MetaSceneName);
-            metaManager = new MetaManager();
-            metaManager.Initialize(SceneManager.GetSceneByName(Main.Instance.MetaSceneName));
-            metaManager.CreateManagerNecessary();
+            MetaManager = new MetaManager();
+            MetaManager.Initialize(SceneManager.GetSceneByName(Main.Instance.MetaSceneName));
+            MetaManager.CreateManagerNecessary();
         }
 
         UIControllerSystem.Instance.OpenMeta();
-        metaManager.Enable();
-        gameplayManager?.Disable();
+        MetaManager.Enable();
+        GameplayManager?.Disable();
         GameUtility.GCCollectDefault();
         
         if (hasActiveScreen)
@@ -39,7 +38,7 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
             await UIControllerSystem.Instance.PlayTransition(false);
         }
         
-        metaManager.Execute();
+        MetaManager.Execute();
 
         IsMetaActive = true;
     }
@@ -48,30 +47,22 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
     {
         await UIControllerSystem.Instance.PlayTransition(true);
         
-        if (gameplayManager == null)
+        if (GameplayManager == null)
         {
             await SceneManager.LoadSceneAsync(Main.Instance.GameplaySceneName, LoadSceneMode.Additive);
-            gameplayManager = new GameplayManager();
-            gameplayManager.Initialize(SceneManager.GetSceneByName(Main.Instance.GameplaySceneName));
-            gameplayManager.CreateManagerNecessary();
+            GameplayManager = new GameplayManager();
+            GameplayManager.Initialize(SceneManager.GetSceneByName(Main.Instance.GameplaySceneName));
+            GameplayManager.CreateManagerNecessary();
         }
         
         UIControllerSystem.Instance.OpenGameplay();
-        metaManager.Disable();
-        gameplayManager.Enable();
+        MetaManager.Disable();
+        GameplayManager.Enable();
         
         await UIControllerSystem.Instance.PlayTransition(false);
         
-        gameplayManager.Execute();
+        GameplayManager.Execute();
         
         IsMetaActive = false;
-    }
-
-
-    //temp
-    public Game GetGame()
-    {
-       var manager = (GameplayManager)gameplayManager;
-       return manager.ActiveGame;
     }
 }

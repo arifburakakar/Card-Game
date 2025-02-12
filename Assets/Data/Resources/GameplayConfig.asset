@@ -15,28 +15,14 @@ MonoBehaviour:
   DealerDeck: {fileID: 2669105918075335236, guid: 12c06e2d3eecd4bdea2af916ad6245f6, type: 3}
   HandWidth: 10
   HandYPosition: 1.5
-  HandArcAngle: 40
-  RotationMultiplier: 10
+  HandArcAngle: 40.8
+  RotationMultiplier: 9.65
   DefaultHandCount: 11
   CardSlotMovementSpeed: 20
-  cardOpenDuration: 0.2
-  CardOpenCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  DragSpeed: 100
+  DragSpeed: 20
   SelectHeightOffset: 0.75
   DealCardTargetOffsetHeight: 1.5
   CardDealMovementDuration: 0.65
-  CardRotationAmaount: 180
-  CardRotationEase:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   CardXMovementCurve:
     serializedVersion: 2
     m_Curve:

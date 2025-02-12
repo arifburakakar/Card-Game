@@ -11,12 +11,15 @@ public partial class Main
     private bool isEnabled = true;
     [SerializeField]
     private Camera camera;
+    [SerializeField]
+    private Canvas overlayCanvas;
     public Vector3 TouchPosition => touchPosition;
     public bool IsEnabled => isEnabled;
     
     private void InitializeInput()
     {
         Input.multiTouchEnabled = false;
+        SetInputEnable(true);
     }
 
     private void HandleInput()
@@ -56,6 +59,7 @@ public partial class Main
             OnInputStatusChanged?.Invoke(isEnabled);
         }
         isEnabled = enabled;
+        overlayCanvas.gameObject.SetActive(!isEnabled); 
     }
 
     public void SetEnableWithoutCallBack(bool enabled)
