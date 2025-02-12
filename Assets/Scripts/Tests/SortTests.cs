@@ -17,7 +17,7 @@ public class SortTests
     }
 
     [Test]
-    public void SetSort_ShouldSortCorrectly()
+    public void SetSort()
     {
         List<OID> hand = new List<OID>();
         List<List<OID>> sortGroups = new List<List<OID>>();
@@ -103,7 +103,7 @@ public class SortTests
     }
 
     [Test]
-    public void RunSort_ShouldSortCorrectly()
+    public void RunSort()
     {
         List<OID> hand = new List<OID>();
         List<List<OID>> sortGroups = new List<List<OID>>();
@@ -190,7 +190,7 @@ public class SortTests
     }
 
     [Test]
-    public void SmartSort_ShouldFindBestCombination()
+    public void SmartSort()
     {
         List<OID> hand = new List<OID>();
         List<List<OID>> sortGroups = new List<List<OID>>();

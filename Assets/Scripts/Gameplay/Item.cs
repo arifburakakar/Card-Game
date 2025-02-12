@@ -29,7 +29,7 @@ public class Item : MonoBehaviour, IPoolable
 
     public virtual void Deselect()
     {
-        
+
     }
 
     protected virtual void OnSpawn()

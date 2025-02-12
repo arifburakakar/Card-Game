@@ -1,18 +1,20 @@
-using PrimeTween;
+using System.Collections.Generic;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 public partial class Game
 {
     private Item selectedItem;
     private Vector3[] slotPoints;
-    private Item[] cards; // may be linklist for swap 
+    private Item[] cards;
     private Vector3 centerPoint;
     private float deltaWidth;
     private Item currentLeftNeighbor;
     private Item currentRightNeighbor;
     private bool neighborsActive;
     private Vector3 leftSide;
+    private Dictionary<Item, float> currentTMap = new Dictionary<Item, float>();
+    private Dictionary<Item, float> targetTMap = new Dictionary<Item, float>();
+
 
     private void CreateSlots()
     {
@@ -24,8 +26,8 @@ public partial class Game
 
         for (int i = 0; i < slotPoints.Length; i++)
         {
-            Vector3 slotPosition = leftSide + Vector3.right * deltaWidth * i;
-            slotPoints[i] = slotPosition;
+            float t = (float)i / (slotPoints.Length - 1);
+            slotPoints[i] = GetTargetCurvePosition(t);
         }
     }
 
@@ -33,33 +35,37 @@ public partial class Game
     {
         await item.PlayOpenAnimation();
         cards[index] = item;
+        float t = (float)index / (slotPoints.Length - 1);
+        currentTMap[item] = t;
+        targetTMap[item] = t;
     }
     
     private void UpdatePositions()
     {
-        // changeable width run time
         deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
         leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
-        
+
         for (int i = 0; i < slotPoints.Length; i++)
         {
-            Vector3 slotPosition = leftSide + Vector3.right * deltaWidth * i;
-            slotPoints[i] =  GetTargetCurvePosition(i);
             Item card = cards[i];
-            if (card == null)
+            if (card == null || card == selectedItem)
                 continue;
-
-            if (card == selectedItem)
-            {
-                continue;
-            }
             
-            card.SetPosition(Vector3.MoveTowards(card.transform.position, GetTargetCurvePosition(i), Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed));
-            card.SetRotation(Vector3.forward * CalculateZRotation(card.transform.position));
+            float newTargetT = (float)i / (slotPoints.Length - 1);
+            targetTMap[card] = newTargetT;
+
+            float currentT = currentTMap.ContainsKey(card) ? FindClosestTOnCurve(card.transform.position) : newTargetT;
+            currentT = Mathf.MoveTowards(currentT, newTargetT,
+                Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed);
+            currentTMap[card] = currentT;
+
+            Vector3 targetPosition = GetTargetCurvePosition(currentT);
+            card.SetPosition(Vector3.MoveTowards(card.transform.position, targetPosition, Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed));
+            card.SetRotation(Vector3.forward * CalculateZRotation(targetPosition));
         }
     }
     
-    private Vector3 GetTargetCurvePosition(int index)
+    private Vector3 GetTargetCurvePosition(float t)
     {
         int slotCount = slotPoints.Length;
 
@@ -68,8 +74,6 @@ public partial class Game
 
         if (slotCount == 1)
             return centerPoint;
-
-        float t = (float)index / (slotCount - 1);
 
         float handWidth = gameplayManager.GameplayConfig.HandWidth;
         Vector3 startPoint = centerPoint + Vector3.left * handWidth * 0.5f;
@@ -144,6 +148,8 @@ public partial class Game
             return;
         }
         
+        float closestT = FindClosestTOnCurve(inputPosition);
+        currentTMap[selectedItem] = closestT;
         
         Vector3 targetPosition = new Vector3(isDrag ? inputPosition.x : slotPoints[GetItemIndex()].x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
         selectedItem.SetPosition(Vector3.Lerp(selectedItem.transform.position, targetPosition, Time.deltaTime * gameplayManager.GameplayConfig.DragSpeed));
@@ -177,6 +183,25 @@ public partial class Game
                 ChangeItems(currentIndex - 1, currentIndex);
             }
         }
+    }
+    
+    private float FindClosestTOnCurve(Vector2 inputPosition)
+    {
+        float closestT = 0;
+        float closestDistance = float.MaxValue;
+
+        for (float t = 0; t <= 1; t += 0.01f)
+        {
+            Vector3 curvePoint = GetTargetCurvePosition(t);
+            float distance = Vector2.Distance(inputPosition, curvePoint);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestT = t;
+            }
+        }
+
+        return closestT;
     }
     
     private void ResetCurrentNeighbors()
@@ -220,9 +245,13 @@ public partial class Game
         {
             return;
         }
-        
+
+        int currentIndex = GetItemIndex();
+        float targetT = (float)currentIndex / (slotPoints.Length - 1);
+        targetTMap[selectedItem] = targetT;
         ResetCurrentNeighbors();
         selectedItem.Deselect();
         selectedItem = null;
     }
+
 }
