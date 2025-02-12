@@ -42,20 +42,21 @@ public partial class Game
     
     private void UpdatePositions()
     {
-        deltaWidth = gameplayManager.GameplayConfig.HandWidth / slotPoints.Length;
-        leftSide = centerPoint + Vector3.left * deltaWidth * (slotPoints.Length / 2);
-
+        // for runtime width change
         for (int i = 0; i < slotPoints.Length; i++)
         {
             Item card = cards[i];
+            
+            float t = (float)i / (slotPoints.Length - 1);
+            slotPoints[i] = GetTargetCurvePosition(t);
+            
             if (card == null || card == selectedItem)
                 continue;
             
-            float newTargetT = (float)i / (slotPoints.Length - 1);
-            targetTMap[card] = newTargetT;
-
-            float currentT = currentTMap.ContainsKey(card) ? FindClosestTOnCurve(card.transform.position) : newTargetT;
-            currentT = Mathf.MoveTowards(currentT, newTargetT,
+            targetTMap[card] = t;
+            
+            float currentT = currentTMap.ContainsKey(card) ? FindClosestTOnCurve(card.transform.position) : t;
+            currentT = Mathf.MoveTowards(currentT, t,
                 Time.deltaTime * gameplayManager.GameplayConfig.CardSlotMovementSpeed);
             currentTMap[card] = currentT;
 
