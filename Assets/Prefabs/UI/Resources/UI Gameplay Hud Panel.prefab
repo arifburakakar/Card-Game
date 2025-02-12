@@ -30,6 +30,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4405514967272354367}
+  - {fileID: 6891140698673405788}
   - {fileID: 5901673583338051303}
   m_Father: {fileID: 3038734066797300369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -788,7 +789,7 @@ GameObject:
   - component: {fileID: 538247311238514940}
   - component: {fileID: 7452230722895793343}
   m_Layer: 5
-  m_Name: Buttons
+  m_Name: Buttom Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -809,7 +810,6 @@ RectTransform:
   - {fileID: 3794862871350156510}
   - {fileID: 522636392127061886}
   - {fileID: 7314765125844138771}
-  - {fileID: 6891140698673405788}
   m_Father: {fileID: 8261894367124587941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -1288,13 +1288,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4475564696251194546}
-  m_Father: {fileID: 5901673583338051303}
+  m_Father: {fileID: 8261894367124587941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: 1059}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 6, y: -53.00006}
   m_SizeDelta: {x: 329.5, y: 111}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &267432404759862318
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -10,6 +10,10 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
     public IManager MetaManager;
     public IManager GameplayManager;
 
+    
+    // for run time test
+    public bool UseZyngaCaseCards = true;
+
     protected override void OnInitialize()
     {
         base.OnInitialize();

@@ -34,7 +34,7 @@ public partial class Game
         dealer = new Dealer();
         player = new Player();
         dealer.AddPlayer(player);
-        dealer.DealCards();
+        dealer.DealCards(GameControllerSystem.Instance.UseZyngaCaseCards);
         CreateSlots();
         StartVisualDealSequence();
         isGameRunning = true;
