@@ -11,7 +11,7 @@ public class SmartSort : BaseSort
         
         List<List<List<OID>>> allCombinations = GetCombinations(setGroups, runGroups);
 
-        int bestCombinationIndex = 0;
+        int bestCombinationIndex = -1;
         int maxValue = 0;
         for (int i = 0; i < allCombinations.Count; i++)
         {
@@ -34,7 +34,7 @@ public class SmartSort : BaseSort
             }
         }
 
-        List<List<OID>> bestCombination = allCombinations[bestCombinationIndex];
+        List<List<OID>> bestCombination = bestCombinationIndex == -1 ? new List<List<OID>>() : allCombinations[bestCombinationIndex];
         var deadwood = Deadwood(hand, bestCombination);
 
         return (bestCombination, deadwood);
@@ -106,12 +106,12 @@ public class SmartSort : BaseSort
             OID oid = hand[i];
             if (groups.TryGetValue(oid.ObjectID, out OID[] group))
             {
-                group[oid.VariantID] = oid;
+                group[oid.VariantID - 1] = oid;
             }
             else
             {
                 OID[] newGroup = new OID[13];
-                newGroup[oid.VariantID] = oid;
+                newGroup[oid.VariantID - 1] = oid;
                 groups.Add(oid.ObjectID, newGroup);
             }
         }

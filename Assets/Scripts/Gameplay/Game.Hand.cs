@@ -117,23 +117,45 @@ public partial class Game
     {
         // find better way without raycast and collider, pointerclick, position check?
 
-        RaycastHit2D hit = Physics2D.Raycast(inputPosition, Vector2.zero, 10);
-        if (hit)
+        RaycastHit2D[] hits = Physics2D.RaycastAll(inputPosition, Vector2.zero, 10);
+        if (hits.Length > 0)
         {
-            Item item = hit.transform.GetComponent<Item>();
-            if (item)
+            Item frontItem = null;
+            int targetIndex = -1;
+            for (int i = 0; i < hits.Length; i++)
             {
-                selectedItem = item;
+                Item item = hits[i].transform.GetComponent<Item>();
+                if (item)
+                {
+                    int index = GetItemIndex(item);
+                    if (index > targetIndex)
+                    {
+                        targetIndex = index;
+                        frontItem = item;
+                    }
+                }
+            }
+            
+
+            
+            if (frontItem)
+            {
+                selectedItem = frontItem;
                 selectedItem.Select();
             }
         }
     }
     
-    private int GetItemIndex()
+    private int GetSelectedItemIndex()
+    {
+        return GetItemIndex(selectedItem);
+    }
+
+    private int GetItemIndex(Item item)
     {
         for (int i = 0; i < cards.Length; i++)
         {
-            if (selectedItem == cards[i])
+            if (item == cards[i])
             {
                 return i;
             }
@@ -152,11 +174,11 @@ public partial class Game
         float closestT = FindClosestTOnCurve(inputPosition);
         currentTMap[selectedItem] = closestT;
         
-        Vector3 targetPosition = new Vector3(isDrag ? inputPosition.x : slotPoints[GetItemIndex()].x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
+        Vector3 targetPosition = new Vector3(isDrag ? inputPosition.x : slotPoints[GetSelectedItemIndex()].x, centerPoint.y + gameplayManager.GameplayConfig.SelectHeightOffset);
         selectedItem.SetPosition(Vector3.Lerp(selectedItem.transform.position, targetPosition, Time.deltaTime * gameplayManager.GameplayConfig.DragSpeed));
         selectedItem.SetRotation(Vector3.forward * CalculateZRotation(selectedItem.transform.position));
 
-        int currentIndex = GetItemIndex();
+        int currentIndex = GetSelectedItemIndex();
         Item newLeft = currentIndex > 0 ? cards[currentIndex - 1] : null;
         Item newRight = currentIndex < cards.Length - 1 ? cards[currentIndex + 1] : null;
         if (currentLeftNeighbor != newLeft || currentRightNeighbor != newRight)
@@ -247,7 +269,7 @@ public partial class Game
             return;
         }
 
-        int currentIndex = GetItemIndex();
+        int currentIndex = GetSelectedItemIndex();
         float targetT = (float)currentIndex / (slotPoints.Length - 1);
         targetTMap[selectedItem] = targetT;
         ResetCurrentNeighbors();

@@ -9,7 +9,16 @@ public class GameControllerSystem : SingletonGameSystem<GameControllerSystem>
 
     public IManager MetaManager;
     public IManager GameplayManager;
-    
+
+    protected override void OnInitialize()
+    {
+        base.OnInitialize();
+        
+        PrimeTween.PrimeTweenConfig.warnZeroDuration = false;
+        PrimeTween.PrimeTweenConfig.warnTweenOnDisabledTarget = false;
+        PrimeTween.PrimeTweenConfig.warnEndValueEqualsCurrent = false;
+    }
+
     public async void LoadMeta()
     {
         bool hasActiveScreen = UIControllerSystem.Instance.HasActiveScreen;

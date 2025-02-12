@@ -12,12 +12,12 @@ public class RunSort : BaseSort
             OID oid = hand[i];
             if (oidMap.TryGetValue(oid.ObjectID, out OID[] group))
             {
-                group[oid.VariantID] = oid;
+                group[oid.VariantID - 1] = oid;
             }
             else
             {
                 OID[] newGroup = new OID[13];
-                newGroup[oid.VariantID] = oid;
+                newGroup[oid.VariantID - 1] = oid;
                 oidMap.Add(oid.ObjectID, newGroup);
             }
         }

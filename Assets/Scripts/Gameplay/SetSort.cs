@@ -6,7 +6,6 @@ public class SetSort : BaseSort
     public override (List<List<OID>>,List<OID>) Sort(List<OID> hand)
     {
         List<List<OID>> groups = new List<List<OID>>();
-        List<OID> sortedHand = new List<OID>();
         List<int> ids = new List<int>();
         
         for (int i = 0; i < hand.Count; i++)
@@ -42,15 +41,5 @@ public class SetSort : BaseSort
         var deadwood = Deadwood(hand, groups);
         
         return (groups, deadwood);
-    }
-    
-    private int GetGroupSum(List<OID> group)
-    {
-        int sum = 0;
-        foreach (OID item in group)
-        {
-            sum += item.GetValue();
-        }
-        return sum;
     }
 }
