@@ -59,7 +59,6 @@ public partial class Main : MonoBehaviour
     
     private void CreateInstances()
     {
-        // async or uniTask can be use
         GameObject coroutineHandlerObject = new GameObject("CoroutineHandler");
         CoroutineHandler coroutineHandler = coroutineHandlerObject.AddComponent<CoroutineHandler>();
         coroutineHandler.OnCreate();

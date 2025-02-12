@@ -42,12 +42,12 @@ public partial class Game
     
     private void UpdatePositions()
     {
-        // for runtime width change
         for (int i = 0; i < slotPoints.Length; i++)
         {
             Item card = cards[i];
             
             float t = (float)i / (slotPoints.Length - 1);
+            // for runtime width change
             slotPoints[i] = GetTargetCurvePosition(t);
             
             if (card == null || card == selectedItem)

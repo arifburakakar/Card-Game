@@ -39,9 +39,7 @@ public class SmartSort : BaseSort
 
         return (bestCombination, deadwood);
     }
-
- 
-
+    
     private List<List<OID>> FindAllPossibleSets(List<OID> hand)
     {
         List<List<OID>> sortedHand = new List<List<OID>>();
